@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Noisy graph isomorphism</title>
+
+		<meta name="description" content="A description of a paper on the limits of anonymization and some ideas for future work.">
+		<meta name="author" content="Harry Mavroforakis">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        
+        <link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/theme/mine.css" id="theme">
+
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+                <section>
+                
+                <p class="title">Measuring the <span style="color:#be3f31">importance</span> of <span style="color:#be3f31">edges</span> in graphs through <span style="color:#be3f31">electric flows</span></p>
+                    
+                <p class="author">Charalampos Mavroforakis</p>
+                
+                </section>
+				<section>
+					<h2>Problem definition</h2>
+					<p>
+                        Given graphs $G_1 = (V, E_1)$ and $G_2 = (V, E_2)$ of size $n = |V|$, a permutation $\pi$ on $V$ maps vertices from
+                        $G_1$ onto $G_2$.
+					</p>
+                    <br/>
+                    <p>
+                        Our task is to find the best such permutation, denoted by $\pi_0$.
+                    </p>
+                    <q>This is a quote</q>
+                    <p class="notes">and the notes go here...</p>
+				</section>
+                
+                <section>
+                    <h4>(an unfortunately ever changing)</h4>
+					<h2>Big picture </h2>
+					<img style="float:left;" src='http://p-hold.com/400/200'>
+                    <img style="float:left; margin-left:50px" class="fragment" src='http://p-hold.com/200/200'>
+                    <img style="float:left; margin-left:50px" class="fragment" src='http://p-hold.com/260/500'>
+                    <img style="float:left; margin-top:-300px" class="fragment" src='http://p-hold.com/650/300'>
+                    <p class="notes">and the notes go here...
+                    and the notes go here...
+                    and the notes go here...
+                    and the notes go here...
+                    and the notes go here...
+                    and the notes go here...STOP</p>
+				</section>
+            
+                
+        
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: true,
+                slideNumber: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+                
+                // math: {
+                //    mathjax: 'plugin/mathjax/MathJax.js',
+                //    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                // },
+
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true }                    
+				]
+			});
+            
+            Reveal.addEventListener( 'slidechanged', function( event ) {
+                // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+                var notes = event.currentSlide.querySelector(".notes");
+                if(notes) {
+                    console.info(notes.innerHTML.replace(/\n\s+/g,'\n'));
+                }
+            } );
+		</script>
+	</body>
+</html>
