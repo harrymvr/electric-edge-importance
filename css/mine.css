@@ -211,9 +211,9 @@ body {
 /*********************************************
  *  STYLING
  ********************************************/
-.reveal .Absolute-Center {
-  width: 50%;
-  height: 50%;
+.reveal .absolute-center {
+  width: 100%;
+  height: 100%;
   overflow: auto;
   margin: auto;
   position: absolute;
