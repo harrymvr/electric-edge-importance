@@ -139,7 +139,6 @@
                         <li>Background</li>
                         <li>Spanning Tree centrality</li>
                         <li>Current Flow centrality</li>
-                        <li>Computational aspects</li>
                         <li>Beyond electrical measures</li>
                     </ul>
                 </section>
@@ -210,12 +209,12 @@
         <section>
             <h2>Computing the node potentials</h2>
             <p class="left">
-                Let $v \in R^n$ be the vector of the node potentials. Then, assuming unit resistors, $I=Bv$.
+                Let $p \in R^n$ be the vector of the node potentials. Then, assuming unit resistors, $I=Bp$.
             </p>
             <p style="margin-top:40px;" class="left">
                 Let $i_{ext}$ be the vector of external currents of the graph. Then, according to Kirchhoff's circuit law, 
                 \begin{equation}
-                i_{ext} = B^TI = B^T B v = Lv
+                i_{ext} = B^TI = B^T B p = Lp
                 \end{equation}
             </p>
         </section>
@@ -324,7 +323,7 @@
             <p class="left">
                 Going back to Ohm's law, 
                 \begin{equation}
-                IR(e) = v(b)-v(a)
+                IR(e) = p(b)-p(a)
                 \end{equation}
                 Consequently, the <i>effective resistance</i> of an edge
                 is the potential difference of its incident nodes if we want to supply unit current to the network.
@@ -334,7 +333,7 @@
         <section>
             <h2>Computing the effective resistance</h2>
             <p class="left">
-                As we saw before, $v = L^\dagger i_{ext}$, so the <i>effective resistance</i>
+                As we saw before, $p = L^\dagger i_{ext}$, so the <i>effective resistance</i>
                 of an edge $e=(a,b)$ can be written as 
                 \begin{equation}
                 R(e) = (\chi_b - \chi_a) L^{\dagger}(\chi_b - \chi_a)^T
@@ -418,8 +417,45 @@
         <section>
             <h2>Definition</h2>
             <p class="left absolute-center">
-                Given an edge $e$, the <i>current flow betweenness</i> of $e$ the average current that goes through $e$
+                The <i>current flow betweenness</i> of edge $e$ is the average current that goes through $e$
                 for a random placement of a battery in $G$, strong enough to drive a unit current through the network.</p>
+        </section>
+
+        <section>
+            <h2>Throughput of an edge</h2>
+            <p class="left absolute-center">
+                For an assignment of $p$, the throughput $\tau(e)$ of edge $e=(a,b)$ can be found by
+                \begin{equation}
+                    \tau(e) = \left| p(a) - p(b) \right|
+                \end{equation}
+            </p>
+        </section>
+
+        <section>
+            <h2>Throughput of an edge</h2>
+            <p class="left absolute-center">
+                For a battery placement $i_{ext}$, we need to solve the system 
+                \begin{equation}
+                Lp=i_{ext}
+                \end{equation}
+            </p>
+        </section>
+
+        <section>
+            <h2>Solving the system</h2>
+            <div class="absolute-center">
+                <p class="left"><i>Slow solvers:</i></p>
+                <p class="left" style="margin-left:40px;">$O(n^3 + mn \log n)$</p>
+                <p class="left"><i>Brandes &amp; Fleisher:</i></p>
+                <p class="left" style="margin-left:40px;">$O(mn^{\frac{3}{2}} \log n + mn \log n)$</p>
+                <p class="left"><i>Koutis et. al.:</i></p>
+                <p class="left" style="margin-left:40px;">$O(mn \log n)$</p>
+
+            </div>
+        </section>
+
+        <section>
+            <h2 class="absolute-center">Beyond electrical measures</h2>
         </section>
 
                 
