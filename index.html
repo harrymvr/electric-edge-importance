@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Noisy graph isomorphism</title>
+		<title>Electrical measures of edge importance</title>
 
 		<meta name="description" content="A description of a paper on the limits of anonymization and some ideas for future work.">
 		<meta name="author" content="Harry Mavroforakis">
@@ -32,17 +32,16 @@
 	</head>
 
 	<body>
-
 		<div class="reveal">
-
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
                 <section>
-                
-                <p class="title"><span style="color:#be3f31; font-weight:600">Electrical</span> measures of <span style="color:#be3f31; font-weight:600">importance</span> for network entities</p>
-                    
-                <p class="author">Charalampos Mavroforakis, Boston University</p>
-                
+                    <p class="title">
+                        <span style="color:#be3f31; font-weight:600">Electrical</span> measures of 
+                        <span style="color:#be3f31; font-weight:600">importance</span> for network entities
+                    </p>
+
+                    <p class="author">Charalampos Mavroforakis, Boston University</p> 
                 </section>
 				<!--<section>
 					<h2>Problem definition</h2>
@@ -72,6 +71,8 @@
                     and the notes go here...STOP</p>
 				</section>-->
                 
+                
+                <!-- The centrality of a node can create kings -->
                 <section>
                     <h2 class="absolute-center">How to rise to power</h2>
                     <p class="notes">Let's talk about world domination ...</p>
@@ -84,8 +85,13 @@
                         they were the most "networked", they had an "important position" among their peers.</p>
                 </section>
                 
+                
+                <!-- Preventing the spread of a virus -->
                 <section>
                     <h2 class="absolute-center">Survive a zombie apocalypse</h2>
+                    <p class="notes">In case you haven't caught up with the news, the biggest concern
+                    of humanity recently has been the scenario of a virus that spreads rapidly and 
+                    turns people into mindless beasts.</p>
                 </section>
                 <section>
                     <img height="500px" style="box-shadow:0 0 0 0;" src="img/propagation.png">
@@ -125,6 +131,297 @@
                     <img height="500px" style="box-shadow:0 0 0 0;" src="img/guarded_propagation_step4.png">
                 </section>
                 
+                
+                <!-- Overview -->
+                <section>
+                    <h2>Roadmap</h2>
+                    <ul>
+                        <li>Background</li>
+                        <li>Spanning Tree centrality</li>
+                        <li>Current Flow centrality</li>
+                        <li>Computational aspects</li>
+                        <li>Beyond electrical measures</li>
+                    </ul>
+                </section>
+                
+                <!-- Background -->
+                <section>
+                    <h2 class="absolute-center">Background</h2>
+                </section>
+                
+                <section>
+                    <h2>Graph notation</h2>
+                    <p style="margin-bottom:40px;text-align:left;">
+                        $G=(V,E)$ is a <i>graph</i> with $n$ nodes and $m$ edges
+                    </p>
+                    <p style="margin-bottom:40px;text-align:left;">
+                        $L$ is the <i>laplacian matrix</i>, with $L(i,i) = deg(i)$ and $L(i,j) = -1$ if $(i,j) \in E$.
+                    </p>
+                    <p style="margin-bottom:40px;text-align:left;">
+                        $B = \{-1,0,1\}^{m \times n}$ is the edge-incidence matrix. 
+                        Randomly assign a direction to each edge. $L = B^TB$
+                    </p>
+                    <p style="margin-bottom:40px;text-align:left;">
+                        <i>Spanning tree</i> is a tree that spans all the nodes of $G$.</i>
+                    </p>
+            
+                    <p class="notes">Undirected vs directed graph</p>
+                </section>
+        
+                <section>
+                    <h2 class="absolute-center">Viewing the graph as an electrical network</h2>
+                </section>
+        
+                <section>
+                    <p class="absolute-center">Image placeholder for graph with resistances</p>
+                </section>
+        
+        <section>
+            <img class="absolute-center"  height="500px" style="box-shadow:0 0 0 0;" src="img/example-electrical.svg">
+        </section>
+        
+        <section>
+            <h2>Laws of electrical networks</h2>
+            <p class="left"><i>Kirchhoff's circuit law:</i></p>
+            <p class="left">Let a voltage source be connected between vertices $a$ and $b$, and let $I>0$ be the total current 
+                flowing from $a$ to $b$. Then, the current $I_{ij}$ between vertices $i$,$j$ satisfies 
+            \begin{equation}
+                \sum_{j:(i,j) \in E} I_{ij} = 
+                \begin{cases}
+                    I & \text{if } i=a \\ 
+                    -I & \text{if } i=b \\
+                    0 & \text{otherwise}
+                \end{cases}
+            \end{equation}                
+            </p>
+        </section>
+        <section>
+            <h2>Laws of electrical networks</h2>
+            <p class="left"><i>Ohm's law:</i></p>
+            <p class="left">
+                For every edge $e=(a,b)$ in the network 
+                \begin{equation}
+                    I_eR_e = V_e
+                \end{equation}
+                where $R_e$ denotes the resistance of the edge and $V_e$ the potential difference between nodes $a$ and $b$.
+            </p>
+        </section>
+        
+        <section>
+            <h2>Computing the node potentials</h2>
+            <p class="left">
+                Let $v \in R^n$ be the vector of the node potentials. Then, assuming unit resistors, $I=Bv$.
+            </p>
+            <p style="margin-top:40px;" class="left">
+                Let $i_{ext}$ be the vector of external currents of the graph. Then, according to Kirchhoff's circuit law, 
+                \begin{equation}
+                i_{ext} = B^TI = B^T B v = Lv
+                \end{equation}
+            </p>
+        </section>
+        
+        <section>
+            <h2>Common methodology</h2>
+            <p class="absolute-center">
+                <ol style="width:70%; list-style-position:inside;">
+                    <li style="padding-bottom:20px;">Pick two nodes</li>
+                    <li style="padding-bottom:20px;">Plug a battery</li>
+                    <li style="padding-bottom:20px;">Measure currents/potentials</li>
+                    <li style="padding-bottom:20px;">Aggregate</li>
+                </ol>
+            </p>
+        </section>
+        <section>
+            <h2>Common methodology</h2>
+            <p class="absolute-center">
+                <ol style="width:70%; list-style-position:inside;">
+                    <li style="padding-bottom:20px;">Pick two nodes</li>
+                    <li style="color:#ccc; padding-bottom:20px;">Plug a battery</li>
+                    <li style="color:#ccc; padding-bottom:20px;">Measure currents/poentials</li>
+                    <li style="padding-bottom:20px;">Aggregate</li>
+                </ol>
+            </p>
+        </section>
+        
+        <!--  Spanning Tree centrality -->
+        <section>
+            <h2 class="absolute-center">Spanning Tree centrality</h2>
+            <p class="footnote">[Spanning edge betweenness, Teixeira et. al. 2013]</p>
+        </section>
+
+        <section>
+            <h2>Definition</h2>
+            <p class="left absolute-center">
+                Given an edge $e$, the <i>spanning betweenness</i> of $e$ represents the fraction of spanning trees of $G$
+                that go through $e$.
+            </p>
+        </section>
+
+        <section>
+            <h2>Motivational example</h2>
+            <ul class="absolute-center">
+                <li>Assessing the importance of an edge in a network</li>
+                <li>Evaluation of the tree credibility during phylogeny reconstruction</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Combinatorial view</h2>
+            <p class="left">Count the number of spanning trees that go through an edge by using Kirchhoff's <i>Tree Matrix theorem</i>.</p>
+            <p class="left"><i>Tree Matrix theorem</i>: For a given graph $G$, let $\lambda_1, \ldots, \lambda_{n-1}$ be the non-zero eigenvalues 
+                of the laplacian of $G$. The number of spanning trees of $G$ is
+                \begin{equation}
+                t(G) = \frac{1}{n} \lambda_1 \lambda_2 \ldots \lambda_{n-1}
+                \end{equation}
+            </p>
+        </section>
+
+        <section>
+            <h2>Combinatorial view</h2>
+            <p class="left">
+                Equivalently, one can compute the determinant $det(L^{(i)})$ for any $i$, where $L^{(i)}$ is the 
+                laplacian after deleting row and column $i$.
+            </p>
+            <p class="left">
+                <i>Teixeira et. al.</i> show that the <i>spanning betweenness</i> of edge $e=(i,j)$ can be 
+                computed through the determinant $det(L^{(i,j)})$. To calculate the importance of all the edges,
+                the complexity of their approach is $O(mn^{\frac{3}{2}})$.
+            </p>
+        </section>
+
+        <section>
+            <h2>Electrical view</h2>
+            <p class="left">
+                The <i>effective resistance</i> between nodes $a$ and $b$, denoted by $R(a,b)$,  is the resistance 
+                of the whole graph when voltage is applied to them.
+            </p>
+            <p class="left">
+                <i>Remember:</i>
+            </p>
+            <p class="left">
+                \begin{equation}
+                R_{total} = R_1 + R_2 \quad \text{(in series)}
+                \end{equation}
+            </p>
+            <p class="left">
+                \begin{equation}
+                \frac{1}{R_{total}} = \frac{1}{R_1} + \frac{1}{R_2} \quad \text{(in parallel)}
+                \end{equation}
+            </p>
+            <p class="left"><i>Corollary:</i> $R(e) \le 1$</p>
+        </section>
+
+        <section>
+            <h2>Electrical view</h2>
+            <p class="absolute-center">It has been shown that the <i>effective resistance</i> of
+                an edge is equal to the probability of that edge being part of a random
+                spanning tree.
+            </p>
+        </section>
+
+        <section>
+            <h2>Computing the effective resistance</h2>
+            <p class="left">
+                Going back to Ohm's law, 
+                \begin{equation}
+                IR(e) = v(b)-v(a)
+                \end{equation}
+                Consequently, the <i>effective resistance</i> of an edge
+                is the potential difference of its incident nodes if we want to supply unit current to the network.
+            </p>
+        </section>
+
+        <section>
+            <h2>Computing the effective resistance</h2>
+            <p class="left">
+                As we saw before, $v = L^\dagger i_{ext}$, so the <i>effective resistance</i>
+                of an edge $e=(a,b)$ can be written as 
+                \begin{equation}
+                R(e) = (\chi_b - \chi_a) L^{\dagger}(\chi_b - \chi_a)^T
+                \end{equation}
+                where $L^\dagger$ is the pseudo-inverse of the Laplacian and $\chi_i$ is the elementary unit vector with value $1$ at coordinate $i$.
+            </p>
+        </section>
+
+        <section>
+            <h2>Computing the effective resistance</h2>
+            <p class="left">
+                The effective resistances of $G$ are the diagonal entries of the matrix $BL^\dagger B^T$. 
+            </p>
+            <p class="left" style="margin-top:40px;">
+                The complexity of such a computation is governed by the pseudo-inverse, so the result is $O(mn^3)$.
+            </p>
+        </section>
+
+        <section>
+            <h2>Efficient, but approximate</h2>
+            <p class="left">
+                The effective resistance of an edge $e=(a,b)$ can be written as 
+                \begin{align}
+                    R(a,b) &= (\chi_b - \chi_a) L^{\dagger}(\chi_b - \chi_a)^T \\
+                        &= (\chi_b - \chi_a) L^{\dagger} L L^\dagger (\chi_b - \chi_a)^T \\
+                        &= (\chi_b - \chi_a) L^{\dagger} B^T B L^\dagger (\chi_b - \chi_a)^T \\
+                        &= \left(B L^\dagger (\chi_b - \chi_a)^T \right)^T (B L^\dagger (\chi_b - \chi_a)^T ) \\
+                        &= \left\| B L^\dagger (\chi_b - \chi_a)^T  \right\|_2^2
+                \end{align}
+            </p>
+            <p class="footnote" style="height:40px;">[Graph Sparsification by Effective Resistances, Spielman D. and Srivastava N., 2009]</p>
+        </section>
+
+        <section>
+            <h2>Efficient, but approximate</h2>
+            <p class="left">
+                <i>Effective resistances</i> are pairwise differences of vectors in 
+                \begin{equation}
+                    \left\{ B L^\dagger \chi_v \right\} _{v \in V}
+                \end{equation}
+            </p>
+            <p class="left">We can use the Johnson-Lindenstrauss lemma to project the matrix $Z = B L^\dagger$ into a $O(logn)$ dimensional
+                space, such that the pairwise differences
+                are preserved within a $(1-\epsilon)$ factor. We will denote this projection matrix by $Q$.
+            </p>
+            <p class="footnote" style="height:40px;">[Graph Sparsification by Effective Resistances, Spielman D. and Srivastava N., 2009]</p>
+        </section>
+
+        <section>
+            <h2>Efficient, but approximate</h2>
+            <p class="left">
+                Avoid finding the pseudo-inverse $L^\dagger$:
+                \begin{align}
+                &\overset{\sim}{Z} = Q B L^\dagger \Rightarrow \\
+                & \overset{\sim}{Z}L = QB \mathbb{I} \Rightarrow \\
+                & L\overset{\sim}{Z}^T = B^T Q^T
+                \end{align}
+            </p>
+            <p class="left"><i>Complexity:</i> $O(\text{Inv}(n,m) \log n)$</p>
+            <p class="footnote" style="height:40px;">[Graph Sparsification by Effective Resistances, Spielman D. and Srivastava N., 2009]</p>
+        </section>
+
+        <section>
+            <h2>Efficient, but approximate</h2>
+            <p class="left">
+                Using the solver from Koutis et. al. :
+            </p>
+            <p class="left" style="margin-left:20px;"><i>Complexity:</i> $O(m \log^2 n \log(\frac{1}{\epsilon}))$</p>
+            <p class="left" style="margin-left:20px;"><i>Approximation:</i> $(1-\epsilon)^2$ factor</p>
+            <p class="footnote" style="height:40px;">[Large-scale Computations of Edge-Importance Measures, Mavroforakis et. al., <i>under review</i>]</p>
+        </section>
+
+
+        <!--  Current Flow betweenness -->
+        <section>
+            <h2 class="absolute-center">Current Flow centrality</h2>
+            <p class="footnote" style="margin-bottom:90px;font-size:smaller;">[Centrality measures based on current flow, Brandes U. and Fleischer D., 2005]</p>
+            <p class="footnote">[A measure of betweenness centrality based on random walks, Newman M.E.J., 2005]</p>
+        </section>
+
+        <section>
+            <h2>Definition</h2>
+            <p class="left absolute-center">
+                Given an edge $e$, the <i>current flow betweenness</i> of $e$ the average current that goes through $e$
+                for a random placement of a battery in $G$, strong enough to drive a unit current through the network.</p>
+        </section>
+
                 
         
 			</div>
