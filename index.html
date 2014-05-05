@@ -472,15 +472,25 @@
         <!--  Current Flow betweenness -->
         <section>
             <h2 class="absolute-center">Current Flow centrality</h2>
-            <p class="footnote" style="margin-bottom:90px;font-size:smaller;">[Centrality measures based on current flow, Brandes U. and Fleischer D., 2005]</p>
-            <p class="footnote">[A measure of betweenness centrality based on random walks, Newman M.E.J., 2005]</p>
+            <p class="footnote" style="margin-bottom:90px;font-size:smaller;">[Centrality measures based on current flow, <br> Brandes U. and Fleischer D., 2005]</p>
+            <p class="footnote">[A measure of betweenness centrality based on random walks,<br> Newman M.E.J., 2005]</p>
         </section>
 
         <section>
             <h2>Definition</h2>
             <p class="left absolute-center">
-                The <i>current flow betweenness</i> of edge $e$ is the average current that goes through $e$
-                for a random placement of a battery in $G$, strong enough to drive a unit current through the network.</p>
+                If we denote by $\tau_{st}(e)$ the throughput of edge $e$ when we attach a battery to nodes $s$ and $t$, then
+                the <i>current flow betweenness</i> of $e$ is  the value
+                \begin{equation*}
+                    \frac{1}{(n-1)(n-2)}\sum_{s \neq t \in V} \tau_{st}(e)
+                \end{equation*}
+                
+                <!--the average current that goes through $e$
+                for a random placement of a battery in $G$, strong enough to drive a unit current through the network.
+
+                    
+                -->
+            </p>
         </section>
 
         <section>
@@ -489,7 +499,7 @@
                 The <i>betweenness centrality</i> of edge $e$ is the fraction of shortest paths between vertices in $G$ 
                 that go over $e$.
             </p>
-            <p class="footnote">[A set of measures of centrality based upon betweenness, Freeman L.C, 1977]</p>
+            <p class="footnote">[A set of measures of centrality based upon betweenness,<br> Freeman L.C, 1977]</p>
         </section>
 
         <section>
