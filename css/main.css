@@ -256,7 +256,7 @@ body {
 .reveal ol,
 .reveal ul {
 	display: inline-block;
-
+    list-style-position:inside;
 	text-align: left;
 	margin: 0 0 0 1em;
 }
