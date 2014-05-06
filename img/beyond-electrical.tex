@@ -1,0 +1,63 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+% THIS IS SIGPROC-SP.TEX - VERSION 3.1
+% WORKS WITH V3.2SP OF ACM_PROC_ARTICLE-SP.CLS
+% APRIL 2009
+%\documentclass{acm_proc_article-sp}
+\usepackage[
+  pass,% keep layout unchanged
+  % showframe,% show the layout
+]{geometry}
+
+
+\usepackage{algorithm}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage[noend]{algpseudocode}
+\usepackage{url}
+\usepackage[scanall]{psfrag}
+%\usepackage{subfigure}
+\usepackage{subcaption}
+\usepackage{topcapt}
+\usepackage{booktabs}
+\usepackage{xcolor,colortbl}
+\usepackage{amsmath}
+\usepackage{multirow}
+%theorems and lemmas
+\newtheorem{lemma}{Lemma}
+\newtheorem{fact}{Fact}
+\newtheorem{definition}{Definition}
+\newtheorem{observation}{Observation}
+\begin{document} 
+
+
+\begin{table}%[t!]
+  \centering
+    \label{table:cfc_convergence}
+  \begin{tabular}{lcc}
+  \toprule
+ Edge measures & Exact & Approximation  \\
+\midrule
+\textit{Electrical centralities}\\
+\multicolumn{1}{c}{{Current Flow}} & \multicolumn{1}{c}{{$O(I(n) + mn\log n)$}} & \multicolumn{1}{c}{{$O(mn\log n)$}}\\
+ & [Brandes05] & [Mavroforakis14] \\
+ \multicolumn{1}{c}{{Spanning edge bt.}} & \multicolumn{1}{c}{{$O(mn^{\frac{3}{2}})$}} & \multicolumn{1}{c}{{$O(m\log^2 n)$}}\\
+  & [Teixeira13] & [Mavroforakis14] \\
+  
+ \midrule
+ \textit{Randomized}\\
+ \multicolumn{1}{c}{{$\kappa$-path}} & \multicolumn{1}{c}{{$O(\kappa m)$}} & \multicolumn{1}{c}{{$O(mn\log n)$}}\\
+  & [DeMeo12] & [] \\
+  \multicolumn{1}{c}{{Spanning edge bt.}} & \multicolumn{1}{c}{{$O(mn^{\frac{3}{2}})$}} & \multicolumn{1}{c}{{$O(m\log^2 n)$}}\\
+   & [Teixeira13] & [Mavroforakis14] \\
+%{\small GrQc} &  {\small 2.1 mins}  & {\small 1.3 mins} & {\small 1.3 mins} & {\small 20 mins} \\
+%{\small Oregon} &  {\small 3.3 mins} &  {\small 1.9 mins} & {\small 1.4 mins} & {\small 4h 40mins} \\
+%{\small Epinions} &  {\small 12h 23mins}  & {\small 5h 26mins} & {\small 3h} & n/a \\
+%{\small \Youtube} &  &  & n/a & n/a \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{document} 
