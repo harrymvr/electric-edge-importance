@@ -113,7 +113,8 @@
                 </section>
                 
                 <section>
-                    <h2 class="absolute-center">But, what if we could guard the roads ...</h2>
+                    <h2 class="absolute-center">What if we could pay a team of 
+                        <span style="color:#be3f31;">superheroes?</span></h2>
                 </section>
                 <section>
                     <img height="500px" style="box-shadow:0 0 0 0;" src="img/guarded_propagation.png">
@@ -138,13 +139,17 @@
                 <!-- Overview -->
                 <section>
                     <h2>Roadmap</h2>
-                    <ul>
-                        <li>Background</li>
-                        <li>Spanning edge betweenness</li>
-                        <li>Current Flow centrality</li>
-                        <li>$\beta-$Current Flow centrality</li>
-                        <li>Speeding up computations using <i>laplacian system solvers</i></li>
-                        <li>Beyond electrical measures</li>
+                    <ul style="list-style-type:none; list-style-position:outside;">
+                        <li style="margin-bottom: 10px;">Background</li>
+                        <li style="margin-bottom: 10px;">Edge importance measures:</li>
+                        <li style="margin-bottom: 10px;">
+                            <ol>
+                                <li style="margin-bottom: 10px;">Spanning edge betweenness</li>
+                                <li style="margin-bottom: 10px;">Current Flow centrality</li>
+                                <li style="margin-bottom: 10px;">$\beta-$Current Flow centrality</li>
+                            </ol>
+                        <li style="margin-bottom: 10px;">Laplacian system solvers</li>
+                        <li style="margin-bottom: 10px;">Beyond electrical measures</li>
                     </ul>
                 </section>
                 
@@ -158,18 +163,104 @@
                     <p style="margin-bottom:40px;text-align:left;">
                         $G=(V,E)$ is a <i>graph</i> with $n$ nodes and $m$ edges
                     </p>
-                    <p style="margin-bottom:40px;text-align:left;">
-                        $L$ is the <i>laplacian matrix</i>, with $L(i,i) = deg(i)$ and $L(i,j) = -1$ if $(i,j) \in E$.
+                    <img height="300px" class="noshadow" src="img/graph/original-graph.png">
+                    <p>
+                        $n = |V| = 5$
                     </p>
-                    <p style="margin-bottom:40px;text-align:left;">
-                        $B = \{-1,0,1\}^{m \times n}$ is the edge-incidence matrix. 
-                        Randomly assign a direction to each edge. $L = B^TB$
+                    <p>
+                        $m = |E| = 7$
                     </p>
-                    <p style="margin-bottom:40px;text-align:left;">
-                        <i>Spanning tree</i> is a tree that spans all the nodes of $G$.</i>
+                </section>
+                
+                <section>
+                    <h2>Graph notation</h2>
+                    <img height="200px" class="noshadow" style="float:left;" src="img/graph/original-graph-numbers.png">
+                    <p>$B = \{-1,0,1\}^{m \times n}$ is the <br> <i>edge-incidence matrix</i>.</p>
+                    <p class="fragment" style="margin-top:40px;text-align:left;">
+                        $B=\left[
+                        \begin{array}{ccccc}
+                        1 & -1 & 0 & 0 & 0 \\
+                        0 & 1 & -1 & 0 & 0 \\
+                        0 & 0 & 1 & -1 & 0 \\
+                        -1 & 0 & 0 & 1 & 0 \\
+                        0 & 1 & 0 & -1 & 0 \\
+                        0 & -1 & 0 & 0 & 1 \\
+                        0 & 0 & 1 & 0 & -1 \\
+                        \end{array}
+                        \right]
+                        $
                     </p>
-            
-                    <p class="notes">Undirected vs directed graph</p>
+                </section>
+                
+                <section>
+                    <h2>Graph notation</h2>
+                    <img height="200px" class="noshadow" style="float:left;" src="img/graph/original-graph-numbers.png">
+                    <p>$
+                            L = 
+                            \begin{cases}
+                                L(i,i) = deg(i)\\
+                                L(i,j) = -1 \text{, if } (i,j) \in E
+                            \end{cases}
+                        $ is the <i>laplacian matrix</i>.
+                    </p>
+                    <p class="fragment" style="margin-top:40px;text-align:left;">
+                        $L=\left[
+                        \begin{array}{ccccc}
+                        2 & -1 & 0 & -1 & 0 \\
+                        -1 & 4 & -1 & -1 & -1 \\
+                        0 & -1 & 3 & -1 & -1 \\
+                        -1 & -1 & -1 & 3 & 0 \\
+                        0 & -1 & -1 & 0 & 2 \\
+                        \end{array}
+                        \right]
+                        $
+                    </p>
+                </section>
+                
+                <section>
+                    <h2>Graph notation</h2>
+                    <p style="margin-top:40px;text-align:left;">
+                        <div style="font-size: 60%;">
+                            $B^TB = \left[
+                            \begin{array}{ccccccc}
+                            1 & 0 & 0 & -1 & 0 & 0 & 0 \\
+                            -1 & 1 & 0 & 0 & 1 & -1 & 0 \\
+                            0 & -1 & 1 & 0 & 0 & 0 & 1 \\
+                            0 & 0 & -1 & 1 & -1 & 0 & 0 \\
+                            0 & 0 & 0 & 0 & 0 & 1 & -1 \\
+                            \end{array}
+                            \right]
+                            \cdot
+                            \left[
+                            \begin{array}{ccccc}
+                            1 & -1 & 0 & 0 & 0 \\
+                            0 & 1 & -1 & 0 & 0 \\
+                            0 & 0 & 1 & -1 & 0 \\
+                            -1 & 0 & 0 & 1 & 0 \\
+                            0 & 1 & 0 & -1 & 0 \\
+                            0 & -1 & 0 & 0 & 1 \\
+                            0 & 0 & 1 & 0 & -1 \\
+                            \end{array}
+                            \right] = 
+                            $
+                        </div>
+                    
+                    <p style="margin-top:40px;text-align:left;">
+                        <div style="font-size: 60%;">
+                            $\left[
+                            \begin{array}{ccccc}
+                            2 & -1 & 0 & -1 & 0 \\
+                            -1 & 4 & -1 & -1 & -1 \\
+                            0 & -1 & 3 & -1 & -1 \\
+                            -1 & -1 & -1 & 3 & 0 \\
+                            0 & -1 & -1 & 0 & 2 \\
+                            \end{array}
+                            \right]
+                            \Rightarrow B^TB = L
+                            $
+                        </div>
+                    </p>
+                    </p>
                 </section>
         
                 <section>
@@ -177,7 +268,9 @@
                 </section>
         
                 <section>
-                    <p class="absolute-center">Image placeholder for graph with resistances</p>
+                    <img height="250px" class="noshadow"  src="img/graph/original-graph.png"> <p>$\Downarrow$ </p>
+                    <img height="250px" class="noshadow" style="margin-left:40px" src="img/graph/electric-graph.png">
+                    <p class="fragment">For the rest of the talk, we will assume unit resistors.</p>
                 </section>
         
         <section>
@@ -213,33 +306,86 @@
         </section>
         
         <section>
-            <h2>Computing the node potentials</h2>
-            <p class="left">
+            <h2>Computing the currents</h2>
+            <p class="left fragment">
                 For a vector of node potentials $p \in \mathbb{R}^n$ 
                 \begin{equation*}
                     I=Bp
                 \end{equation*}
             </p>
-            <p style="margin-top:80px;" class="left">
-                External currents of the graph: $i_{ext} \in \{-I,0,I\}^{n}$ 
+            <img height="300px" class="noshadow fragment"  src="img/graph/electric-graph-with-battery.png">
+        </section>
+            
+            
+            
+        <section>
+            <h2>Computing the node potentials</h2>
+            <p style="margin-top:80px;" class="left fragment">
+                External currents of the graph  $i_{ext} \in \{-I_{bat},0,I_{bat}\}^{n}$ 
+            </p>
+            <div class="fragment">
+                <img height="300px" class="noshadow" style="float:left;" src="img/graph/electric-graph-with-battery-numbers.png">
+                <p style="margin-top:40px;">$i_{ext} = \left(
+                    \begin{array}{c}
+                        I_{bat} \\
+                        0 \\
+                        -I_{bat} \\
+                        0 \\
+                        0
+                    \end{array}
+                    \right)$
+                </p>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Computing the node potentials</h2>
+            <p style="margin-top:80px;" class="left fragment">
+                From <i>Kirchhoff's law</i>:
                 \begin{equation*}
-                i_{ext} = B^TI = B^T B p = Lp
+                    i_{ext} = B^TI
                 \end{equation*}
             </p>
-            <p class="notes">according to Kirchhoff's circuit law</p>
+            <p class="left fragment">
+                and from Ohm's law
+                \begin{equation*}
+                    B^TI = B^T B p = Lp
+                \end{equation*}
+            </p>
+            <p style="margin-top:80px;" class="left fragment">
+                Consequently,
+                \begin{equation*}
+                    p = L^\dagger i_{ext}
+                \end{equation*}
+            </p>
         </section>
         
         <section>
             <h2>Common methodology</h2>
-            <p class="absolute-center">
-                <ol style="width:70%; list-style-position:inside;">
-                    <li style="padding-bottom:20px;">Pick two nodes</li>
-                    <li style="padding-bottom:20px;">Plug a battery</li>
-                    <li style="padding-bottom:20px;">Measure currents/potentials</li>
-                    <li style="padding-bottom:20px;">Aggregate</li>
-                </ol>
-            </p>
+            <p>1.&nbsp;&nbsp;Pick two nodes</p>
+            <img height="250px" class="noshadow"  src="img/graph/pick-nodes-1.png">   
         </section>
+        <section>
+            <h2>Common methodology</h2>
+            <p>2.&nbsp;&nbsp;Plug a battery</p>
+            <img height="350px" class="noshadow"  src="img/graph/electric-graph-with-battery.png">   
+        </section>
+        <section>
+            <h2>Common methodology</h2>
+            <p>3.&nbsp;&nbsp;Measure currents/potentials</p>
+            <img height="350px" class="noshadow"  src="img/graph/measure-1.png">   
+        </section>
+        <section>
+            <h2>Common methodology</h2>
+            <p>Repeat</p>
+            <img height="350px" class="noshadow"  src="img/graph/measure-2.png">   
+        </section>
+        <section>
+            <h2>Common methodology</h2>
+            <p>4.&nbsp;&nbsp;Aggregate</p>
+            <img height="350px" class="noshadow"  src="img/graph/aggregate.png">   
+        </section>
+
         <section>
             <h2>Common methodology</h2>
             <p class="absolute-center">

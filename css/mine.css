@@ -232,3 +232,7 @@ body {
     bottom: 0px;
     width: 100%
 }
+
+.reveal .noshadow {
+    box-shadow:0 0 0 0;
+}
