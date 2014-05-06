@@ -406,10 +406,17 @@
 
         <section>
             <h2>Definition</h2>
-            <p class="left absolute-center">
-                Given an edge $e$, the <i>spanning betweenness</i> of $e$ represents the fraction of spanning trees of $G$
-                that go through $e$.
-            </p>
+            <div class="absolute-center">
+                <p class="left">
+                    Given an edge $e$, the <i>spanning betweenness</i> of $e$ represents the fraction of spanning trees of $G$
+                    that go through $e$.
+                </p>
+                <p>
+                    \begin{equation*}
+                        \delta_G(e) = \frac{\sigma_G(e)}{\sigma_G}
+                    \end{equation*}
+                </p>
+            </div>
             <p class="footnote">[Spanning edge betweenness, Teixeira et. al. 2013]</p>
         </section>
 
@@ -447,10 +454,23 @@
 
         <section>
             <h2>Electrical view</h2>
-            <p class="left">
-                The <i>effective resistance</i> $r(a,b)$ between nodes $a$ and $b$ is the resistance 
+            <p class="absolute-center">
+                The <i>effective resistance </i> $r(a,b)$ between nodes $a$ and $b$ is the resistance 
                 of the whole graph when voltage is applied to them.
             </p>
+        </section>
+
+        <section>
+            <h2>Effective resistance</h2>
+            <img height="250px" class="noshadow fragment"  src="img/graph/eff-resistance1.png"> 
+            <div class="fragment">
+                <p>$\Downarrow$ </p>
+                <img height="250px" class="noshadow" style="margin-top:20px" src="img/graph/eff-resistance-collapsed.png">
+            </div>
+        </section>
+    
+        <section>
+            <h2>Effective resistance</h2>
             <p class="left">
                 <i>Remember:</i>
             </p>
@@ -464,20 +484,22 @@
                 \frac{1}{R_{total}} = \frac{1}{R_1} + \frac{1}{R_2} \quad \text{(in parallel)}
                 \end{equation*}
             </p>
-            <p class="left"><i>Corollary:</i> $R(e) \le 1$</p>
-        </section>
-
-        <section>
-            <h2>Effective resistance</h2>
-            <p>Image placeholder for effective resistance</p>
+            <p class="left"><i>Corollary:</i> $r(e) \le 1$</p>
         </section>
 
         <section>
             <h2>Electrical view</h2>
-            <p class="absolute-center">The <i>effective resistance</i> of
-                an edge is know to be equal to the probability of that edge appearing in a random
-                spanning tree.
-            </p>
+            <div class="absolute-center">
+                <p>The <i>effective resistance</i> of
+                    an edge is know to be equal to the probability of that edge appearing in a random
+                    spanning tree.
+                </p>
+                <p class="fragment">
+                        \begin{equation*}
+                            r(e) = \frac{\sigma_G(e)}{\sigma_G}
+                        \end{equation*}
+                </p>
+            </div>
             <p class="footnote">[Modern Graph Theory, Bollobas B.,  1998]</p>
         </section>
 
@@ -486,28 +508,32 @@
             <p class="left">
                 Going back to Ohm's law, 
                 \begin{equation*}
-                Ir(e) = p(b)-p(a)
+                I_{bat}r(e) = p(b)-p(a)
                 \end{equation*}
             </p>
-            <p class="left" style="margin-top:80px;">$\Large\Rightarrow$ $r(e)$ is the potential difference accross $e$, if $I=1$</p>
+            <p class="left fragment" style="margin-top:80px;">
+                $\Large\Rightarrow$ $r(e)$ is the potential difference accross $e$, if we set $I_{bat}=1$
+            </p>
+            <p class="left fragment" style="margin-top:80px;">
+                $\Large\Rightarrow$ We need to compute the node potentials for $I_{bat}=1$
+            </p>
         </section>
 
         <section>
             <h2>Computing the effective resistance</h2>
             <p class="left">
-                We already showed that  
-                
+                Recall that  
                 \begin{equation*}
-                    Lp = i_{ext} \Rightarrow p = L^\dagger i_{ext}
+                    p = L^\dagger i_{ext}
                 \end{equation*}
-                where $L^\dagger$ is the pseudo-inverse of the Laplacian and 
-                $\chi_i$ is the elementary unit vector with value $1$ at coordinate $i$.
             </p>
-            <p class="left" style="margin-top:40px;">
-                Then, 
-                $
-                r(e) = (\chi_b - \chi_a) L^{\dagger}(\chi_b - \chi_a)^T
-                $
+            <p class="left fragment" style="margin-top:40px;">
+                Then,  setting $i_{ext} = (\chi_b - \chi_a)^T$
+                \begin{equation*}
+                    r(e) = (\chi_b - \chi_a) L^{\dagger}(\chi_b - \chi_a)^T
+                \end{equation*}
+            </p>
+            <p class="left fragment" style="margin-top:40px;">
                 or, in matrix form
                 \begin{equation*}
                 r = BL^\dagger B^T
